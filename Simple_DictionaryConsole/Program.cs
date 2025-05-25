@@ -4,12 +4,18 @@
     {
         static void Main(string[] args)
         {
+            Tests();
+            Console.WriteLine("Program complited success.");
+        }
 
-            #region Tests
+        #region Tests
+        private static void Tests()
+        {
+            
             OtusDictionary otusDictionary = new OtusDictionary();
             try
             {
-                otusDictionary.GetFirstStringByKey(0);
+                otusDictionary.Get(2);
             }
             catch (ValueNotFoundExeption e)
             {
@@ -35,7 +41,7 @@
             otusDictionary3.Add(11, "11");
             otusDictionary3.Add(22, "22");
             otusDictionary3.Add(33, "33");
-            Console.WriteLine(otusDictionary3.GetFirstStringByKey(22));
+            Console.WriteLine(otusDictionary3.Get(22));
 
             //Test incresing _size
             otusDictionary3.Add(44, "44");
@@ -43,16 +49,10 @@
             otusDictionary3.Add(66, "66");
             otusDictionary3.Add(77, "77");
 
-            //Test zero _size Dictionary creation
-            OtusDictionary otusDictionary4 = new OtusDictionary(0);
+            //Test one _size Dictionary creation
+            OtusDictionary otusDictionary4 = new OtusDictionary(1);
             otusDictionary4.Add(11, "11");
-            Dictionary<int,int> keyValuePairs;    
-            keyValuePairs.Add(0, 1);
-
-            #endregion Tests
-
-
-            Console.WriteLine("Hello, World!");
         }
+        #endregion Tests
     }
 }

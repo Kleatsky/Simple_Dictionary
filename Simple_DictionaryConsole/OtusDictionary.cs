@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Simple_DictionaryConsole
         private int _size;
         private int[] keys;
         private string[] stringValues;
-        public int Lenght => _lenght;
+        public int Lenght => _size;
         private int _lenght;
 
         public OtusDictionary()
@@ -25,7 +26,7 @@ namespace Simple_DictionaryConsole
         }
         public OtusDictionary(int size)
         {
-            if (size < 0)
+            if (size < 1)
             {
                 throw new ArgumentOutOfRangeException("size: " + size);
             }
@@ -37,22 +38,26 @@ namespace Simple_DictionaryConsole
         }
         public void Add(int key, string stringValue)
         {
-            if(stringValue is null)
+            if (stringValue is null)
             {
                 throw new ArgumentNullException("StringValue can't be null.");
             }
 
-            _lenght++;
-            if (_lenght >= _size)
+            //keys[key % _size] чтобы не было 100 % 10 и 1000 % 10, как одинаковые индексы
+            if (stringValues[key % _size] is null || keys[key % _size] == key)
+            {
+                stringValues[key % _size] = stringValue;
+                keys[key % _size] = key;
+            }
+            else
             {
                 IncreaseDictionarySize();
+                Add(key, stringValue);
             }
-            
-            keys[_lenght] = key;
-            stringValues[_lenght] = stringValue;
         }
         private void IncreaseDictionarySize()
         {
+            int tempsize = _size;
             if (_size == 0)
             {
                 _size = 2;
@@ -68,14 +73,29 @@ namespace Simple_DictionaryConsole
                     throw;
                 }
             }
-            Array.Resize(ref keys, _size);
-            Array.Resize(ref stringValues, _size);
-        }
-        public string GetFirstStringByKey(int key)
-        {
-            for (int i = 0; i < _lenght; i++)
+
+            int[] tempKeys = keys;
+            string[] tempStringValues = stringValues;
+
+            keys = new int[_size];
+            stringValues = new string[_size];
+
+            for (int i = 0; i < tempsize; i++)
             {
-                if (keys[i] == key) return stringValues[i];
+                if (stringValues[i % _size] != null)
+                {
+                    Add(tempKeys[i], tempStringValues[i]);
+                }
+            }
+
+
+        }
+        public string Get(int key)
+        {
+            //Сравниваем в keys[key % _size] c key, чтобы не было 10 и 100 одинаковые значения
+            if (key % _size >= 0 && keys[key % _size] == key && stringValues[key % _size] != null)
+            {
+                return stringValues[key % _size];
             }
             throw new ValueNotFoundExeption($"StringValue of key {key} not found.");
         }
