@@ -11,7 +11,7 @@
         #region Tests
         private static void Tests()
         {
-            
+
             OtusDictionary otusDictionary = new OtusDictionary();
             try
             {

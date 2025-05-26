@@ -9,20 +9,16 @@ namespace Simple_DictionaryConsole
 {
     internal class OtusDictionary
     {
-        private int _version;
         private int _size;
         private int[] keys;
         private string[] stringValues;
         public int Lenght => _size;
-        private int _lenght;
 
         public OtusDictionary()
         {
             _size = 2;
-            _version = 0;
             keys = new int[2];
             stringValues = new string[2];
-            _lenght = 0;
         }
         public OtusDictionary(int size)
         {
@@ -31,21 +27,25 @@ namespace Simple_DictionaryConsole
                 throw new ArgumentOutOfRangeException("size: " + size);
             }
             _size = size;
-            _version = 0;
             keys = new int[size];
             stringValues = new string[size];
-            _lenght = 0;
         }
 
+        /// <summary>
+        /// Indexater
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public (int, string) this[int i]
         {
             get
             {
-                if(i < 0 || i >= _size)
+                if (i < 0 || i >= _size)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                return (keys[i],stringValues[i]);
+                return (keys[i], stringValues[i]);
             }
         }
         public void Add(int key, string stringValue)
@@ -99,8 +99,6 @@ namespace Simple_DictionaryConsole
                     Add(tempKeys[i], tempStringValues[i]);
                 }
             }
-
-
         }
         public string Get(int key)
         {
