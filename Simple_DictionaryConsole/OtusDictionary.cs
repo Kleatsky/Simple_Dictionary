@@ -36,6 +36,18 @@ namespace Simple_DictionaryConsole
             stringValues = new string[size];
             _lenght = 0;
         }
+
+        public (int, string) this[int i]
+        {
+            get
+            {
+                if(i < 0 || i >= _size)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                return (keys[i],stringValues[i]);
+            }
+        }
         public void Add(int key, string stringValue)
         {
             if (stringValue is null)

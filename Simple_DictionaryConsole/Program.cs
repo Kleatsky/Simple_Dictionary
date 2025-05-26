@@ -52,6 +52,26 @@
             //Test one _size Dictionary creation
             OtusDictionary otusDictionary4 = new OtusDictionary(1);
             otusDictionary4.Add(11, "11");
+
+
+            //Test indexeter
+            Console.WriteLine(otusDictionary3[5]);
+            try
+            {
+                (int, string) tempVariable = otusDictionary3[-1];
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine("Index below 0 exeption " + e.Message);
+            }
+            try
+            {
+                (int, string) tempVariable = otusDictionary3[50];
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine("Index bigger then dictionary size exeption " + e.Message);
+            }
         }
         #endregion Tests
     }
